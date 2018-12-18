@@ -3,13 +3,6 @@ var router = express.Router();
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
 const { URL, DB_NAME, COLLECTION_NAME } = require('../config.js')
-
-// const data = {
-//   URL             : 'mongodb://localhost:27017/myproject',
-//   DB_NAME         : 'myproject',
-//   COLLECTION_NAME : 'documents',
-// }
-
 const { 
   insertManyDocuments,
   deleteManyDocuments,

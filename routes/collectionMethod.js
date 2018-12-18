@@ -12,12 +12,12 @@ module.exports.deleteManyDocuments = async(db) => {
 module.exports.insertManyDocuments = async(db) => {
     const collection = db.collection(colName)
     return await collection.insertMany([
-      { name: 'toto', age: 25, weight: 65, height: 176 },
-      { name: 'momo', age: 27, weight: 50, height: 163 },
-      { name: 'koko', age: 25, weight: 87, height: 189 },
-      { name: 'nattou', age: 25, weight: 47, height: 110 },
-      { name: 'hotaru', age: 25, weight: 65, height: 179 },
-      { name: 'takuma', age: 55, weight: 78, height: 183 },
+      { name: 'toto',   age: '25', weight: '65', height: '176' },
+      { name: 'momo',   age: '27', weight: '50', height: '163' },
+      { name: 'koko',   age: '25', weight: '87', height: '189' },
+      { name: 'nattou', age: '25', weight: '47', height: '110' },
+      { name: 'hotaru', age: '25', weight: '65', height: '179' },
+      { name: 'takuma', age: '55', weight: '78', height: '183' },
     ])
   }
   
