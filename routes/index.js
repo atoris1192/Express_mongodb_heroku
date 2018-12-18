@@ -7,6 +7,7 @@ const {
   insertManyDocuments,
   deleteManyDocuments,
   findDocuments,
+  findOneDocument,
 
 } = require('./collectionMethod.js')
 
@@ -35,9 +36,26 @@ const main = async () => {
     })
     router.get('/find', (req, res) => {
       findDocuments(db)
-        .then(docs => console.log('docs: ', docs))
-        .catch(err => console.error(err))
-      res.end()
+        .then(docs => {
+          // console.log('find docs: ', docs)
+          res.render('list', { items: docs }) 
+        })
+        .catch(err => {
+          console.error('find result: ', err)
+          res.end()
+        })
+    })
+    router.get('/:id', (req, res) => {
+      const _id = req.params.id
+      findOneDocument({db, _id})
+        .then(doc => {
+          // console.log('find doc: ', doc)
+          res.render('show', { item: doc }) 
+        })
+        .catch(err => {
+          console.error('find result: ', err)
+          res.end()
+        })
     })
 
 

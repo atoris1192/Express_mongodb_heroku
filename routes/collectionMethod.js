@@ -1,4 +1,5 @@
 const assert = require('assert')
+const ObjectId = require('mongodb').ObjectID
 const colName = 'documents'
 const state = {
     debag: true,
@@ -20,12 +21,17 @@ module.exports.insertManyDocuments = async(db) => {
       { name: 'takuma', age: '55', weight: '78', height: '183' },
     ])
   }
+  module.exports.findOneDocument = async({db, _id}) => {
+    const collection = db.collection(colName)
+    return await collection
+        .findOne({ _id: ObjectId( _id )})
+  }
   
   module.exports.findDocuments = async(db) => {
     const collection = db.collection(colName)
     return await collection
       .find({})
-      .project({ '_id': 0})
+    //   .project({ '_id': 0})
       .limit(100)
       .toArray()
   }

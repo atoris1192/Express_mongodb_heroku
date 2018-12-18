@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Show
+  p ID    : #{ item._id }
+  p Name  : #{ item.name }
+  p Age   : #{ item.age }
+  p Weight: #{ item.weight }
+  p Height: #{ item.height }
+  p: a(href="/find") Go back
