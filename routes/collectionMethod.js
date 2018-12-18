@@ -49,10 +49,30 @@ module.exports.insertManyDocuments = async(db) => {
           .project({ '_id': 0})
           .limit(100)
           .toArray()
-  
   }
-  
+  module.exports.deleteOneDocument= async({ db, _id }) => {
+    const collection = db.collection(colName)
+    return await collection.deleteOne({ _id: ObjectId( _id ) })
+  }
+
   module.exports.insertOneDocument= async({ db, itemObj }) => {
     const collection = db.collection(colName)
-    return collection.insertOne( itemObj )
+    return await collection.insertOne( itemObj )
+  }
+
+  module.exports.findOneAndUpdateDocument= async({ db, req }) => {
+    const collection = db.collection(colName)
+    const data = [
+      { _id: ObjectId(req.body._id) },
+      { $set: {
+          name: req.body.name,
+          age: req.body.age,
+          weight: req.body.weight,
+          height: req.body.height
+        }
+      },
+      { returnNewDocument: true }
+    ]
+    console.log('findOneAndUpdateDocument data: ', data)
+    return await collection.findOneAndUpdate( ...data )
   }

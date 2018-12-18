@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
+const ObjectId = require('mongodb').ObjectID
 const { URL, DB_NAME, COLLECTION_NAME } = require('../config.js')
 const { 
   insertManyDocuments,
@@ -9,7 +10,8 @@ const {
   findDocuments,
   findOneDocument,
   insertOneDocument,
-
+  deleteOneDocument,
+  findOneAndUpdateDocument,
 } = require('./collectionMethod.js')
 
 const main = async () => {
@@ -41,14 +43,15 @@ const main = async () => {
     router.get('/find', (req, res) => {
       findDocuments(db)
         .then(docs => {
-          // console.log('find docs: ', docs)
+          console.log('find docs: ', docs)
           res.render('list', { items: docs }) 
         })
         .catch(err => {
-          console.error('find result: ', err)
+          console.error('find error: ', err)
           res.end()
         })
     })
+
     router.post('/create', (req, res) => {
       const itemObj = {
         name: req.body.name,
@@ -59,17 +62,51 @@ const main = async () => {
       insertOneDocument({ db, itemObj })
         .then(r => console.log('insertOne result: ', r.result))
         .catch(err => console.error('InsertOne result: ', err))
-
     })
-    router.get('/:id', (req, res) => {
+
+    router.get('/items/:id/edit', (req, res) => {
       const _id = req.params.id
       findOneDocument({db, _id})
         .then(doc => {
-          // console.log('find doc: ', doc)
+          console.log('->edit doc: ', doc)
+          res.render('edit', { item: doc }) 
+        })
+        .catch(err => {
+          console.error('edit error: ', err)
+          res.end()
+        })
+    })
+
+    router.put('/items/:id', (req, res) => {
+      findOneAndUpdateDocument({db, req})
+        .then(r => {
+          console.log('findOneAndUpdate result: ', r.result)
+          res.redirect('/find')
+        })
+        .catch(err => {
+          console.error('findOneAndUpdate result: ', err)
+          res.end()
+        })
+    })
+
+    router.delete('/items/:id', (req, res) => {
+      const _id = req.body._id
+      deleteOneDocument({db, _id})
+        .then(r => {
+          console.log('DeleteOne result: ', r.result)
+          res.redirect('/find')
+        })
+        .catch(err => console.error('DeleteOne result: ', err))
+    })
+    router.get('/items/:id', (req, res) => {
+      const _id = req.params.id
+      findOneDocument({db, _id})
+        .then(doc => {
+          console.log('/:id doc: ', doc)
           res.render('show', { item: doc }) 
         })
         .catch(err => {
-          console.error('find result: ', err)
+          console.error('/:id catch: ', err)
           res.end()
         })
     })

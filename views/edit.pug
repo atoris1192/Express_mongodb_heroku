@@ -1,0 +1,15 @@
+
+extends layout
+
+block content
+  h1 Edit
+  form(method="post" action=`/items/${ item._id }`)
+    div Name : #[input(type="text" name="name" value=`${ item.name }`)]
+    div Age : #[input(type="text" name="age" value=`${ item.age }`)]
+    div Weight : #[input(type="text" name="weight" value=`${ item.weight }`)]
+    div Height : #[input(type="text" name="height" value=`${ item.height }`)]
+    input(type="submit" value="[Edit]")
+    input(type="hidden" name="_method" value="put")
+    input(type="hidden" name="_id" value=`${ item._id }`)
+
+  p: a(href="/find") Go back
