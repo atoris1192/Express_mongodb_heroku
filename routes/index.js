@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
-// const { URL, DB_NAME, COLLECTION_NAME } = require('../config.js')
+const { URL, DB_NAME, COLLECTION_NAME } = require('../config.js')
 
-const data = {
-  URL             : 'mongodb://localhost:27017/myproject',
-  DB_NAME         : 'myproject',
-  COLLECTION_NAME : 'documents',
-}
-// const client = new MongoClient(data.URL, { useNewUrlParser: true })
+// const data = {
+//   URL             : 'mongodb://localhost:27017/myproject',
+//   DB_NAME         : 'myproject',
+//   COLLECTION_NAME : 'documents',
+// }
+
 const { 
   insertManyDocuments,
   deleteManyDocuments,
@@ -18,12 +18,12 @@ const {
 } = require('./collectionMethod.js')
 
 const main = async () => {
-  const client = new MongoClient(data.URL, { useNewUrlParser: true })
+  const client = new MongoClient(URL, { useNewUrlParser: true })
   try {
     await client.connect()
     console.info("Connected successfully to Server")
-    const db = client.db(data.DB_NAME)
-    let r 
+    const db = client.db(DB_NAME)
+    let result = null 
 
     router.get('/', function(req, res, next) {
       res.render('index', { title: 'mongodb' })
@@ -36,7 +36,8 @@ const main = async () => {
     })
     router.get('/insertMany', (req, res) => {
       insertManyDocuments(db)
-      console.log('InsertMany: ', r)
+        .then(r => console.log('InsertMany result: ', r.result))
+        .catch(err => console.error('InsertMany result: ', err))
       res.send('insert done')
     })
     router.get('/find', (req, res) => {
@@ -48,42 +49,10 @@ const main = async () => {
 
 
   } catch(err) {
-    console.error(err.stack)
+    console.error('TryCatch: ', err.stack)
     client.close()
   }
 }
-
 main()
-
-// client.connect( err => {
-//     assert.equal(null, err)
-//     console.log("Connected successfully to Server")
-//     const db = client.db(data.DB_NAME)
-//   /* GET home page. */
-//   router.get('/', function(req, res, next) {
-//     res.render('index', { title: 'mongodb' })
-//   });
-//   router.get('/deleteMany', (req, res) => {
-//     console.log(req.query)
-//     deleteManyDocuments(db, result => {
-//       console.log(result.result)
-//     })
-//     res.send('delete done')
-//   })
-//   router.get('/insertMany', (req, res) => {
-//     console.log(req.query)
-//     insertManyDocuments(db, result => {
-//       console.log(result.result)
-//     })
-//     res.send('insert done')
-//   })
-//   router.get('/find', (req, res) => {
-//     console.log(req.query);
-//     findDocuments(db, docs => {
-//       console.log(docs)
-//     })
-    
-//   })
-// })
 
 module.exports = router;
