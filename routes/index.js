@@ -8,6 +8,7 @@ const {
   deleteManyDocuments,
   findDocuments,
   findOneDocument,
+  insertOneDocument,
 
 } = require('./collectionMethod.js')
 
@@ -34,6 +35,9 @@ const main = async () => {
         .catch(err => console.error('InsertMany result: ', err))
       res.send('insert done')
     })
+    router.get('/new', (req, res) => {
+      res.render('new')
+    })
     router.get('/find', (req, res) => {
       findDocuments(db)
         .then(docs => {
@@ -44,6 +48,18 @@ const main = async () => {
           console.error('find result: ', err)
           res.end()
         })
+    })
+    router.post('/create', (req, res) => {
+      const itemObj = {
+        name: req.body.name,
+        age: req.body.age,
+        weight: req.body.weight,
+        height: req.body.height,
+      }
+      insertOneDocument({ db, itemObj })
+        .then(r => console.log('insertOne result: ', r.result))
+        .catch(err => console.error('InsertOne result: ', err))
+
     })
     router.get('/:id', (req, res) => {
       const _id = req.params.id

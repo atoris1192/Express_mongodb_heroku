@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Create
+  form(method="post" action="/create")
+    div Name: #[input(type="text" name="name")]
+    div Age : #[input(type="text" name="age")]
+    div Weight: #[input(type="text" name="weight")]
+    div Height: #[input(type="text", name="height")]
+    div: input(type="submit" value="Create")
+
+  p: a(href="/find") Go back

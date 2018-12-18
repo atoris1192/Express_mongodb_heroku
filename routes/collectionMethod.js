@@ -52,21 +52,7 @@ module.exports.insertManyDocuments = async(db) => {
   
   }
   
-  module.exports.insertOneDocumentPost= async({ db, insertOneData }) => {
-      const collection = db.collection(colName)
-      const arrayInsertOneData = Object.entries(insertOneData)
-    const fixInsertOneData = {}
-    for(let item of arrayInsertOneData) {
-      key = item[0]
-      value = item[1]
-      fixInsertOneData[key] = (value - 0)
-    }
-    delete fixInsertOneData.name
-    const input = { ...insertOneData, ...fixInsertOneData }
-  
-      if (state.debug) {
-      console.log('input: ', input)
-      }
-  
-    return collection.insertOne( input )
+  module.exports.insertOneDocument= async({ db, itemObj }) => {
+    const collection = db.collection(colName)
+    return collection.insertOne( itemObj )
   }
