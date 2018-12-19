@@ -1,18 +1,18 @@
 extends layout
 
 block content
-  section
-    h1 List
+  section.toppo
+    p.create: a(href="/new") Create
+    h2 List
     container
       ul
         for item, index in items
-          li
-            a(href=`/items/${ item._id }`) #{ item.name }
-            a(href=`/items/${ item._id }/edit`) [Edit]
-            form(method="post" action=`/items/${ item._id }`)
-              input(type="submit" value="[Delete]")
+          li.list
+            a.name(href=`/items/${ item._id }`) #{ item.name }
+            a.edit(href=`/items/${ item._id }/edit`) Edit
+            form.delete(method="post" action=`/items/${ item._id }`)
+              input.delete(type="submit" value="Delete")
               input(type="hidden" name="_csrf" value=`${ csrftoken }`)
               input(type="hidden" name="_method" value="delete")
               input(type="hidden" name="_id" value=`${ item._id }`)
 
-  p: a(href="/new") Create

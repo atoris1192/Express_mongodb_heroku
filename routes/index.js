@@ -57,8 +57,14 @@ const main = async () => {
         height: req.body.height,
       }
       insertOneDocument({ db, itemObj })
-        .then(r => console.log('insertOne result: ', r.result))
-        .catch(err => console.error('InsertOne result: ', err))
+        .then(r => {
+          console.log('insertOne result: ', r.result)
+          res.redirect('/find')
+        })
+        .catch(err => {
+          console.error('InsertOne result error: ', err)
+          res.end()
+        })
     })
 
     router.get('/items/:id/edit', (req, res) => {

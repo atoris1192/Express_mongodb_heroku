@@ -1,13 +1,20 @@
 extends layout
 
 block content
-  h1 Create
-  form(method="post" action="/create")
-    div Name: #[input(type="text" name="name")]
-    div Age : #[input(type="text" name="age")]
-    div Weight: #[input(type="text" name="weight")]
-    div Height: #[input(type="text", name="height")]
-    input(type="hidden" name="_csrf" value=`${ csrftoken }`)
-    div: input(type="submit" value="Create")
+  section.new
+    h2 Create
+    .container
+      form.new(method="post" action="/create")
+        div.new Name
+          input.item(type="text" name="name")
+        div.new Age
+          input.item(type="text" name="age")
+        div.new Weight
+          input.item(type="text" name="weight")
+        div.new Height
+          input.item(type="text", name="height")
+        div.new.create
+          input(type="hidden" name="_csrf" value=`${ csrftoken }`)
+          input(type="submit" value="Create")
 
-  p: a(href="/find") Go back
+      p.go_back: a(href="/find") Go back

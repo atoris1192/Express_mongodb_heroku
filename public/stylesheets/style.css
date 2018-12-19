@@ -8,11 +8,18 @@ body {
   font-size: 14px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
-  color: var(--bd_color); }
+  color: var(--bd_color);
+  box-sizing: border-box; }
 
 .container {
   width: 90%;
   margin: 0 auto; }
+
+h2 {
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: normal;
+  padding-top: 20px; }
 
 header .container.header {
   display: grid;
@@ -60,9 +67,77 @@ header nav#menu {
       padding: 30px;
       color: red; }
 
-section h1 {
-  text-align: center;
-  font-weight: normal;
-  margin: 0 0 60px; }
+section.toppo {
+  background-color: #fff; }
+  section.toppo ul {
+    list-style-type: none;
+    display: block;
+    width: 90%;
+    background-color: rgba(211, 207, 207, 0.527);
+    margin: 0 auto; }
+  section.toppo a {
+    text-decoration: none; }
+  section.toppo .list {
+    display: grid;
+    grid-template: 40px / 1fr 60px 60px;
+    justify-items: center;
+    align-items: center; }
+  section.toppo .edit {
+    display: block;
+    padding: 0px 10px;
+    border-radius: 5px;
+    background-color: #78e278;
+    color: var(--white); }
+  section.toppo .name {
+    display: block;
+    justify-self: start; }
+  section.toppo .delete {
+    display: block;
+    cursor: pointer; }
+  section.toppo .create {
+    width: 90%;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding: 10px 5px;
+    background-color: rgba(211, 207, 207, 0.527); }
+    section.toppo .create a {
+      text-align: center;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      text-decoration: none; }
+
+section.new {
+  background-color: #fff; }
+  section.new .item {
+    width: 300px; }
+  section.new form.new {
+    padding: 20px 20px;
+    background-color: rgba(211, 207, 207, 0.527); }
+  section.new div.new {
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
+    padding: 5px 5px; }
+    section.new div.new.create input {
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      padding: 20px 20px;
+      background-color: #fff;
+      color: #333; }
+
+.go_back {
+  width: 90%;
+  margin: 10px auto; }
+  .go_back a {
+    margin: 0 auto;
+    border-radius: 5px;
+    width: 80px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    background-color: #333;
+    color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
