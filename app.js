@@ -22,6 +22,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(expressSession({ secret: 'fdfadfdafgew'}))
+app.use(csrf())
+app.use((req, res, next) => {
+  res.locals.csrftoken = req.csrfToken()
+  next()
+})
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),

@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient
-const assert = require('assert')
-const ObjectId = require('mongodb').ObjectID
-const { URL, DB_NAME, COLLECTION_NAME } = require('../config.js')
+// const assert = require('assert')
+// const ObjectId = require('mongodb').ObjectID
+const { URL, DB_NAME } = require('../config.js')
 const { 
   insertManyDocuments,
   deleteManyDocuments,
@@ -20,7 +20,7 @@ const main = async () => {
     await client.connect()
     console.info("Connected successfully to Server")
     const db = client.db(DB_NAME)
-    let result = null 
+    // let result = null 
 
     router.get('/', function(req, res, next) {
       res.render('index', { title: 'mongodb' })
@@ -43,7 +43,7 @@ const main = async () => {
     router.get('/find', (req, res) => {
       findDocuments(db)
         .then(docs => {
-          console.log('find docs: ', docs)
+          // console.log('find docs: ', docs)
           res.render('list', { items: docs }) 
         })
         .catch(err => {
