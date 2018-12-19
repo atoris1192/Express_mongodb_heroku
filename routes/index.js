@@ -78,26 +78,35 @@ const main = async () => {
     })
 
     router.put('/items/:id', (req, res) => {
-      findOneAndUpdateDocument({db, req})
-        .then(r => {
-          console.log('findOneAndUpdate result: ', r.result)
-          res.redirect('/find')
-        })
-        .catch(err => {
-          console.error('findOneAndUpdate result: ', err)
-          res.end()
-        })
+      if (req.body._id !== req.params.id) {
+        next(new Error('not match id'))
+      } else {
+        findOneAndUpdateDocument({db, req})
+          .then(r => {
+            console.log('findOneAndUpdate result: ', r.result)
+            res.redirect('/find')
+          })
+          .catch(err => {
+            console.error('findOneAndUpdate result: ', err)
+            res.end()
+          })
+      }
     })
 
     router.delete('/items/:id', (req, res) => {
-      const _id = req.body._id
-      deleteOneDocument({db, _id})
-        .then(r => {
-          console.log('DeleteOne result: ', r.result)
-          res.redirect('/find')
-        })
-        .catch(err => console.error('DeleteOne result: ', err))
+      if (req.body._id !== req.params.id) {
+        next(new Error('not match id'))
+      } else {
+        const _id = req.body._id
+        deleteOneDocument({db, _id})
+          .then(r => {
+            console.log('DeleteOne result: ', r.result)
+            res.redirect('/find')
+          })
+          .catch(err => console.error('DeleteOne result: ', err))
+        }
     })
+
     router.get('/items/:id', (req, res) => {
       const _id = req.params.id
       findOneDocument({db, _id})
@@ -110,7 +119,6 @@ const main = async () => {
           res.end()
         })
     })
-
 
   } catch(err) {
     console.error('TryCatch: ', err.stack)
