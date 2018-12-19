@@ -20,7 +20,7 @@ const main = async () => {
     const db = client.db(process.env.DB_NAME || DB_NAME)
 
     router.get('/', function(req, res, next) {
-      res.render('index', { title: 'mongodb' })
+      res.render('index', { title: 'Express mongodb' })
     });
     router.get('/deleteMany', (req, res) => {
       deleteManyDocuments(db)
