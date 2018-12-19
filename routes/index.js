@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient
-// const assert = require('assert')
-// const ObjectId = require('mongodb').ObjectID
 const { URL, DB_NAME } = require('../config.js')
 const { 
   insertManyDocuments,
@@ -15,12 +13,11 @@ const {
 } = require('./collectionMethod.js')
 
 const main = async () => {
-  const client = new MongoClient(URL, { useNewUrlParser: true })
+  const client = new MongoClient(process.env.MONGODB_URI || URL, { useNewUrlParser: true })
   try {
     await client.connect()
     console.info("Connected successfully to Server")
-    const db = client.db(DB_NAME)
-    // let result = null 
+    const db = client.db(process.env.DB_NAME || DB_NAME)
 
     router.get('/', function(req, res, next) {
       res.render('index', { title: 'mongodb' })
